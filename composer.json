@@ -4,7 +4,8 @@
     "type": "project",
     "require": {
         "laravel/lumen-framework": "5.2.*",
-        "vlucas/phpdotenv": "~2.2"
+        "vlucas/phpdotenv": "~2.2",
+        "darkaonline/swagger-lume": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

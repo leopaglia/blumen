@@ -53,6 +53,15 @@ interface BaseRepositoryInterface
     public function findBy($key, $operator = null, $value = null);
 
     /**
+     * Update a model
+     *
+     * @param $id
+     * @param array $attributes
+     * @return bool
+     */
+    public function update($id, array $attributes = []);
+
+    /**
      * Save a model
      *
      * @param \Illuminate\Database\Eloquent\Model $model

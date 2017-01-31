@@ -21,7 +21,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $this->baseQuery()->get();
     }
 
-
     /**
      * Fetch a model by id
      *
@@ -64,6 +63,18 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function findBy($key, $operator = null, $value = null)
     {
         return $this->baseQuery()->where($key, $operator, $value)->get();
+    }
+
+    /**
+     * Update a model
+     *
+     * @param $id
+     * @param array $attributes
+     * @return bool
+     */
+    public function update($id, array $attributes = [])
+    {
+        return $this->findById($id)->update($attributes);
     }
 
     /**

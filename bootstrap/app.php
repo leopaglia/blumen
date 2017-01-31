@@ -18,7 +18,14 @@ try {
 | that serves as the central piece of this framework. We'll use this
 | application as an "IoC" container and router for this framework.
 |
+| The transactional application wraps every request in a DB transaction.
+| There is also available the normal Lumen application to use.
+|
 */
+
+//$app = new Laravel\Lumen\Application(
+//    realpath(__DIR__.'/../')
+//);
 
 $app = new TransactionalApplication(
     realpath(__DIR__.'/../')
@@ -75,6 +82,7 @@ $app->middleware([
 
 $app->configure('bindings');
 $app->configure('constants');
+$app->configure('swagger-lume');
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +96,8 @@ $app->configure('constants');
 */
 
 $app->register(App\Providers\RepositoryBindingsServiceProvider::class);
+
+$app->register(\SwaggerLume\ServiceProvider::class);
 
 if(in_array(env('APP_ENV'), ['LOCAL', 'DEV'])) {
     $app->register(Blumen\Generators\Providers\GeneratorServiceProvider::class);
@@ -112,7 +122,8 @@ $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     ]);
 });
 
-// App routes
+// App routes - Load every route file in the Http/Routes folder
+// TODO: make easier to use route level middlewares
 $files = (new Illuminate\Filesystem\Filesystem())->allFiles(__DIR__ . '/../app/Http/Routes');
 foreach ($files as $file) {
     $file = $file->getFileName();
