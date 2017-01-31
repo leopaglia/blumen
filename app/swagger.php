@@ -4,8 +4,12 @@
 
 /**
  * @SWG\Swagger(
- *     schemes={"http"},
- *     host="localhost",
- *     basePath="/"
+ *   @SWG\Info(
+ *     version="1.0.0",
+ *     title="App"
+ *   ),
+ *  schemes={"http"},
+ *  host="localhost",
+ *  basePath="/"
  * )
  */

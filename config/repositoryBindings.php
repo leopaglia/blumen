@@ -16,7 +16,7 @@ return [
             // set the bindings here as contract => implementation
         ]
 
-    ],
+    ]
 
 ];
 

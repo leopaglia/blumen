@@ -16,10 +16,12 @@ class RepositoryBindingsServiceProvider extends ServiceProvider
     {
         // if the bindings config file has not been loaded, we load it manually
         if(!config('bindings')) {
-            config(['bindings'], require __DIR__ . '/../../config/bindings.php');
+            config(['bindings'], require __DIR__ . '/../../config/repositoryBindings.php');
         }
 
         $repositoryBindings = config('bindings.repositories.bindings');
+
+        if(empty($repositoryBindings)) return;
 
         foreach($repositoryBindings as $interface => $implementation) {
 
