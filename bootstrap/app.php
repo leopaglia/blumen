@@ -82,7 +82,7 @@ $app->middleware([
 
 $app->configure('bindings');
 $app->configure('constants');
-$app->configure('swagger-lume');
+//$app->configure('swagger-lume');
 
 /*
 |--------------------------------------------------------------------------
@@ -97,7 +97,7 @@ $app->configure('swagger-lume');
 
 $app->register(App\Providers\RepositoryBindingsServiceProvider::class);
 
-$app->register(\SwaggerLume\ServiceProvider::class);
+//$app->register(\SwaggerLume\ServiceProvider::class);
 
 if(in_array(env('APP_ENV'), ['LOCAL', 'DEV'])) {
     $app->register(\Blumen\Generators\Providers\GeneratorServiceProvider::class);
