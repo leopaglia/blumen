@@ -13,23 +13,29 @@ interface BaseRepositoryInterface
     /**
      * Fetch every model
      *
+     * @Cacheable
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function findAll();
-
+    
     /**
      * Fetch a model by id
+     *
+     * @Cacheable
      *
      * @param $id
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function findById($id);
-
+    
     /**
      * Find one entity by key value
      * Usage: findOneBy('id', '=', 123)
      *        findOneBy(['id', 123])
      *        findOneBy([['age', '>', 18], ['name', 'john']])
+     *
+     * @Cacheable
      *
      * @param string | array $key
      * @param string $operator
@@ -37,13 +43,15 @@ interface BaseRepositoryInterface
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function findOneBy($key, $operator = null, $value = null);
-
+    
     /**
      * Find many entities by key value
      *
      * Usage: findBy('id', '=', 123)
      *        findBy(['id', 123])
      *        findBy([['age', '>', 18], ['name', 'john']])
+     *
+     * @Cacheable
      *
      * @param string | array $key
      * @param string $operator
@@ -55,6 +63,8 @@ interface BaseRepositoryInterface
     /**
      * Update a model
      *
+     * @InvalidatesCache
+     *
      * @param $id
      * @param array $attributes
      * @return bool
@@ -64,6 +74,8 @@ interface BaseRepositoryInterface
     /**
      * Save a model
      *
+     * @InvalidatesCache
+     *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return bool
      */
@@ -72,13 +84,16 @@ interface BaseRepositoryInterface
     /**
      * Delete a model
      *
+     * @InvalidatesCache
+     *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return bool
      */
     public function delete(Model $model);
-
     /**
      * Delete model/s by id
+     *
+     * @InvalidatesCache
      *
      * @param int | array $id
      */
@@ -88,6 +103,8 @@ interface BaseRepositoryInterface
      * Create a model and save it
      * Model fields are filled with $attributes that correspond to the model $fillable fields
      * Return the model if successful, throw an exception on failure
+     *
+     * @InvalidatesCache
      *
      * @param array $attributes
      * @return \Illuminate\Database\Eloquent\Model

@@ -5,6 +5,9 @@ namespace App\Repositories\Base;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 
+use App\Annotations\Cacheable;
+use App\Annotations\InvalidatesCache;
+
 /**
  * Class BaseRepository
  * @package App\Repositories\Base
@@ -13,6 +16,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
 {
     /**
      * Fetch every model
+     *
+     * @Cacheable
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -23,6 +28,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
     /**
      * Fetch a model by id
+     *
+     * @Cacheable
      *
      * @param $id
      * @return \Illuminate\Database\Eloquent\Model|null
@@ -37,6 +44,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Usage: findOneBy('id', '=', 123)
      *        findOneBy(['id', 123])
      *        findOneBy([['age', '>', 18], ['name', 'john']])
+     *
+     * @Cacheable
      *
      * @param string | array $key
      * @param string $operator
@@ -55,6 +64,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
      *        findBy(['id', 123])
      *        findBy([['age', '>', 18], ['name', 'john']])
      *
+     * @Cacheable
+     *
      * @param string | array $key
      * @param string $operator
      * @param $value
@@ -68,6 +79,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Update a model
      *
+     * @InvalidatesCache
+     *
      * @param $id
      * @param array $attributes
      * @return bool
@@ -80,6 +93,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Save a model
      *
+     * @InvalidatesCache
+     *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return bool
      */
@@ -91,6 +106,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Delete a model
      *
+     * @InvalidatesCache
+     *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return bool
      */
@@ -101,6 +118,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
     /**
      * Delete model/s by id
+     *
+     * @InvalidatesCache
      *
      * @param int | array $id
      */
@@ -114,6 +133,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Create a model and save it
      * Model fields are filled with $attributes that correspond to the model $fillable fields
      * Return the model if successful, throw an exception on failure
+     *
+     * @InvalidatesCache
      *
      * @param array $attributes
      * @return \Illuminate\Database\Eloquent\Model

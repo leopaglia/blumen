@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Repositories\ServiceRepository;
 use Laravel\Lumen\Routing\Controller;
 
 /**
@@ -9,8 +10,14 @@ use Laravel\Lumen\Routing\Controller;
  */
 class StatusController extends Controller
 {
+    public function __construct(ServiceRepository $s)
+    {
+        $this->s = $s;
+    }
+
     public function getStatus()
     {
-        return ["status" => "OK"];
+        return $this->s->findAll();
+//        return ["status" => "OK"];
     }
 }

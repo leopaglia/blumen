@@ -2,6 +2,7 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once 'TransactionalApplication.php';
+require_once 'ApplicationAspectKernel.php';
 
 try {
     (new Dotenv\Dotenv(__DIR__.'/../'))->load();
@@ -95,13 +96,25 @@ $app->configure('constants');
 |
 */
 
-$app->register(App\Providers\RepositoryBindingsServiceProvider::class);
+$app->register(App\Providers\BindingsProvider::class);
 
 //$app->register(\SwaggerLume\ServiceProvider::class);
 
 if(in_array(env('APP_ENV'), ['LOCAL', 'DEV'])) {
     $app->register(\Blumen\Generators\Providers\GeneratorServiceProvider::class);
 }
+
+
+// DOCUMENT ME
+
+$applicationAspectKernel = ApplicationAspectKernel::getInstance();
+$applicationAspectKernel->init(array(
+    'debug' => true, // use 'false' for production mode
+    // Cache directory
+    'cacheDir'  => storage_path('framework/cache'),
+    // Include paths restricts the directories where aspects should be applied, or empty for all source files
+    'includePaths' => [__DIR__ . '../app']
+));
 
 
 /*
