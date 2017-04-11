@@ -64,7 +64,7 @@ $app->singleton(
 */
 
 $app->middleware([
-    App\Http\Middleware\ExampleMiddleware::class
+//    App\Http\Middleware\ExampleMiddleware::class
 ]);
 
 /*
@@ -77,9 +77,7 @@ $app->middleware([
 | function.
 */
 
-//$app->configure('bindings');
 $app->configure('constants');
-//$app->configure('swagger-lume');
 
 /*
 |--------------------------------------------------------------------------

@@ -11,6 +11,14 @@ use Go\Lang\Annotation\Around;
  */
 class RepositoryCacheAspect implements Aspect
 {
+    /**
+     * @var int $minutes - default minutes to keep a cache record
+     */
+    static $minutes = 60;
+
+    /**
+     * @var \Illuminate\Cache\Repository
+     */
     private $cache = null;
 
     public function __construct()
@@ -45,7 +53,7 @@ class RepositoryCacheAspect implements Aspect
 
         $key = $this->buildKey($methodName, $params);
 
-        return $this->cache->tags($class)->rememberForever($key, function() use($invocation) {
+        return $this->cache->tags($class)->remember($key, self::$minutes, function() use($invocation) {
             return $invocation->proceed();
         });
     }
@@ -59,7 +67,6 @@ class RepositoryCacheAspect implements Aspect
     {
         $obj = $invocation->getThis();
         $class = is_object($obj) ? get_class($obj) : $obj;
-
         $this->cache->tags($class)->flush();
         return $invocation->proceed();
     }
