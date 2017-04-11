@@ -1,7 +1,8 @@
 <?php
 
-require_once __DIR__.'/../vendor/autoload.php';
-require_once 'TransactionalApplication.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+require_once 'ApplicationAspectKernel.php';
 
 try {
     (new Dotenv\Dotenv(__DIR__.'/../'))->load();
@@ -23,11 +24,7 @@ try {
 |
 */
 
-//$app = new Laravel\Lumen\Application(
-//    realpath(__DIR__.'/../')
-//);
-
-$app = new TransactionalApplication(
+$app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
@@ -80,7 +77,7 @@ $app->middleware([
 | function.
 */
 
-$app->configure('bindings');
+//$app->configure('bindings');
 $app->configure('constants');
 //$app->configure('swagger-lume');
 
@@ -95,14 +92,24 @@ $app->configure('constants');
 |
 */
 
-$app->register(App\Providers\RepositoryBindingsServiceProvider::class);
-
-//$app->register(\SwaggerLume\ServiceProvider::class);
-
 if(in_array(env('APP_ENV'), ['LOCAL', 'DEV'])) {
     $app->register(\Blumen\Generators\Providers\GeneratorServiceProvider::class);
+    $app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
 }
 
+/*
+|--------------------------------------------------------------------------
+| Initialize an application aspect container
+|--------------------------------------------------------------------------
+*/
+$applicationAspectKernel = ApplicationAspectKernel::getInstance();
+$applicationAspectKernel->init(array(
+    'debug' => true, // use 'false' for production mode
+    // Cache directory
+    'cacheDir'  => storage_path('framework/cache'),
+    // Include paths restricts the directories where aspects should be applied, or empty for all source files
+    'includePaths' => array(__DIR__ . '/../app/')
+));
 
 /*
 |--------------------------------------------------------------------------
@@ -116,7 +123,7 @@ if(in_array(env('APP_ENV'), ['LOCAL', 'DEV'])) {
 */
 
 // Health route
-$app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
+$app->group(['namespace' => 'App\Http\Controllers'], function (Laravel\Lumen\Application $app) {
     $app->get('/', [
         'uses' => 'StatusController@getStatus'
     ]);

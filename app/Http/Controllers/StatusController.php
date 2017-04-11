@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Laravel\Lumen\Routing\Controller;
 
 /**
@@ -9,6 +10,9 @@ use Laravel\Lumen\Routing\Controller;
  */
 class StatusController extends Controller
 {
+    /**
+     * @return array
+     */
     public function getStatus()
     {
         return ["status" => "OK"];

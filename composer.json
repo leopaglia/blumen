@@ -3,15 +3,17 @@
     "description": "A modified version of Lumen, with some plugins and MVC structure.",
     "type": "project",
     "require": {
-        "laravel/lumen-framework": "5.2.*",
+        "laravel/lumen-framework": "5.4.*",
         "vlucas/phpdotenv": "~2.2",
-        "darkaonline/swagger-lume": "~1.0"
+        "goaop/framework": "^2.1",
+        "indigophp/doctrine-annotation-autoload": "^0.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "phpunit/phpunit": "~5.0",
         "mockery/mockery": "~0.9",
-        "blumen/generators": "dev-master"
+        "blumen/generators": "dev-master",
+        "barryvdh/laravel-ide-helper": "^2.3"
     },
     "autoload": {
         "psr-4": {
@@ -32,7 +34,7 @@
     ],
     "scripts": {
         "post-root-package-install": [
-            "php -r \"copy('.env.example', '.env');\""
+          "php -r \"copy('.env.example', '.env');\""
         ]
     },
     "minimum-stability": "dev",
